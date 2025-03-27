@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semantic HTML</title>
+</head>
+<body>
+    <header>
+        <h1>H1 Example</h1>
+        <h2>H2 Example</h2>
+        <h3>H3 Example</h3>
+        <h4>H4 Example</h4>
+        <h5>H5 Example</h5>
+        <h6>H6 Example</h6>
+        <p>This is the p tag</p>
+    </header>
+    <section style="display: flex; flex-direction: row;">
+        <ul type="square">
+            <li>Optimize your project by 40-50% with us</li>
+            <li>Create Beauiful UX Design to attrach customers</li>
+            <li>Curate context that brings more people in</li>
+        </ul>
+        <ol start="5">
+            <li>Hello, HTML</li>
+            <li>Hello, HTML</li>
+            <li>Hello, HTML</li>
+            <li class="example-class">Hello, HTML</li>
+        </ol>
+    </section>
+    <table cellspacing=15 cellpadding=5>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>name</th>
+                <th>description</th>
+                <th>price</th>
+                <th>quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <th>Laptop</th>
+                <td>A portable computer</td>
+                <td>$899.99</td>
+                <td>12</td>
+            </tr>
+        </tbody>
+    </table>
+    <section>
+        <form action="post">
+            <label for="id">
+                Id:
+            </label>
+            <input type="text" id="id" >
+            <label for="name">
+                Name:
+            </label>
+            <input type="text" id="name">
+            <label for="description">
+                Description:
+            </label>
+            <input type="text" id="description">
+            <label for="price">
+                Price:
+            </label>
+            <input type="number" name="price" id="price">
+            <label for="quantity">
+                Quantity: 
+            </label>
+            <input type="number" name="quantity" id="quantity">
+            <input type="button" value="Submit">
+        </form>
+        <br>
+        <form action="post">
+            <label for="username">
+                Username:
+            </label>
+            <input type="text" id="username">
+            <label for="password">
+                Password:
+            </label>
+            <input type="password" name="password" id="password">
+            <label for="birthday">
+                Birthday:
+            </label>
+            <input type="date" name="birthday" id="birthday">
+            <label for="job-title">
+                Job Title:
+            </label>
+            <input type="radio" name="job-title" id="software" value="Software Engineer">
+            <label for="software">
+                Software Engineer
+            </label>
+            <input type="radio" name="job-title" id="food-worker" value="Food Worker">
+            <label for="food-worker">
+                Food Worker
+            </label>
+            <input type="radio" name="job-title" id="retail" value="Retail Worker">
+            <label for="retail">
+                Retail Worker
+            </label>
+            <label for="remember-me">
+                Remember Me:
+            </label>
+            <input type="checkbox" name="remember-me" id="remember-me">
+            <select name="dnd-character" id="character-class">
+                <option value=""> --Please Select a Class --</option>
+                <option value="paladin">Paladin</option>
+                <option value="bard">Bard</option>
+                <option value="cleric">Cleric</option>
+                <option value="barbarian">Barbarian</option>
+                <option value="mage">Mage</option>
+                <option value="warrior">Warrior</option>
+            </select>
+            <input type="submit" value="Submit">
+        </form>
+    </section>
+    <style>
+        .example-class {
+            background-color: aquamarine;
+        }
+    </style>
+</body>
+</html>
