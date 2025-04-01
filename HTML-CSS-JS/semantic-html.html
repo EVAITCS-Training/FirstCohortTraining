@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Semantic HTML</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script>
+        function alertingExample() {
+            alert("welcome to the webpage")
+        }
+        alertingExample();
+        varExample = 10
+    </script>
 </head>
 <body class="container">
     <header>
@@ -50,6 +57,8 @@
         </tbody>
     </table>
     <section>
+        <button onclick="clickMeExample()">Submit</button>
+        <br>
         <form action="post">
             <label for="id">
                 Id:
@@ -74,7 +83,7 @@
             <input type="button" value="Submit">
         </form>
         <br>
-        <form action="post">
+        <form onsubmit="submitForm(data)">
             <label for="username">
                 Username:
             </label>
@@ -106,7 +115,7 @@
                 Remember Me:
             </label>
             <input type="checkbox" name="remember-me" id="remember-me">
-            <select name="dnd-character" id="character-class" class="form-select">
+            <select name="dnd-character" id="character-class" class="form-select" onchange="characterClassSelector(event)">
                 <option value=""> --Please Select a Class --</option>
                 <option value="paladin">Paladin</option>
                 <option value="bard">Bard</option>
@@ -115,6 +124,7 @@
                 <option value="mage">Mage</option>
                 <option value="warrior">Warrior</option>
             </select>
+            <div id="character-display"></div>
             <input type="submit" value="Submit">
         </form>
     </section>
@@ -124,5 +134,11 @@
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script>
+        function clickMeExample() {
+            alert("You've clicked the button")
+        }
+    </script>
+    <script src="script.js"></script>
 </body>
 </html>
