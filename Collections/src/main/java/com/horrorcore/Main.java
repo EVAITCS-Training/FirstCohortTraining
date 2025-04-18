@@ -143,7 +143,7 @@ public class Main {
 //            }
 //        });
 
-        Person person = Person.builder().name("Matthew").gender("Male").build();
+        //Person person = Person.builder().name("Matthew").gender("Male").build();
     }
 
     public static void changeArray(String[] names, int index, String name) {
