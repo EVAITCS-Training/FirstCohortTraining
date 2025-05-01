@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Java Burger Main Menu</title>
+</head>
+<body>
+    <h1>Java Burger</h1>
+    <br>
+    <h2>Search Menu</h2>
+    <br>
+
+    <form action="#" th:action="@{/search}" method="post">
+      <h3>Please put in price range</h3>
+      <label for="low">Low Price:</label>
+      <label for="high">High Price:</label>
+      <br>
+      <input type="number" id="low" name="low" th:value="${low}" required>
+      <input type="number" id="high" name="high" th:value="${high}" required>
+      <br>
+      <button type="submit">Search</button>
+    </form>
+
+</body>
+</html>

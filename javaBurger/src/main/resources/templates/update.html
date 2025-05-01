@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Java Burger | Update Menu Item</title>
+</head>
+<body>
+<h1>Java Burger</h1>
+<br>
+<h2>Update Menu Item</h2>
+<br>
+
+<form action="#" th:action="@{'/update/' + ${menuItem.id()}}" method="post">
+    <h3>Please put in item name and price</h3>
+    <label for="name">Name:</label>
+    <label for="price">Price:</label>
+    <br>
+    <input type="text" id="name" name="name" th:value="*{menuItem.name()}" required>
+    <input type="number" id="price" name="price" th:value="*{menuItem.price()}" required step="0.01">
+    <br>
+    <button type="submit">Update</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Java Burger Main Menu</title>
+</head>
+<body>
+    <h1>Java Burger</h1>
+    <br>
+    <h2>Main Menu</h2>
+    <br>
+
+    <div>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+            <tr th:each="item : ${menuItems}">
+                <td th:text="${item.name}">Burger Name</td>
+                <td th:text="${item.price}">Price</td>
+                <td>
+                    <form action="#" th:action="@{'/delete/' + ${item.id()}}" method="get">
+                        <input type="hidden" th:name="${item.id}" th:value="${item.id}"/>
+                        <button type="submit">Delete</button>
+                    </form>
+                    <form action="#" th:action="@{'/update/' + ${item.id()}}" method="get">
+                        <input type="hidden" th:name="${item.id}" th:value="${item.id}"/>
+                        <button type="submit">Update</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
