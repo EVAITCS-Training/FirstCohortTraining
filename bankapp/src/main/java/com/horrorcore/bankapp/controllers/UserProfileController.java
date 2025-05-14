@@ -1,5 +1,6 @@
 package com.horrorcore.bankapp.controllers;
 
+import com.horrorcore.bankapp.annotations.LogExecutionTime;
 import com.horrorcore.bankapp.entities.UserProfile;
 import com.horrorcore.bankapp.services.UserProfileService;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,7 @@ public class UserProfileController {
         this.userProfileService = userProfileService;
     }
 
+    @LogExecutionTime
     @PostMapping(value = {"", "/"})
     public ResponseEntity<UserProfile> postNewUserProfile(@RequestBody UserProfile userProfile) {
         log.info("POST NEW USER PROFILE");
@@ -33,6 +35,7 @@ public class UserProfileController {
         return new ResponseEntity<>(createdUserProfile, HttpStatus.CREATED);
     }
 
+    @LogExecutionTime
     @GetMapping("/{id}")
     public ResponseEntity<UserProfile> getUserProfile(@PathVariable String id) {
         log.info("GET USER PROFILE");
@@ -42,6 +45,7 @@ public class UserProfileController {
         return new ResponseEntity<>(userProfile, HttpStatus.OK);
     }
 
+    @LogExecutionTime
     @PutMapping("/")
     public ResponseEntity<UserProfile> updateUserProfile(@RequestBody UserProfile userProfile) {
         log.info("UPDATE USER PROFILE");

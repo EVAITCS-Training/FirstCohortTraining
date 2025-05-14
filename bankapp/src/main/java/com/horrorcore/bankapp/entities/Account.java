@@ -13,5 +13,6 @@ public class Account {
     private UUID id;
     private AccountType accountType;
     private double balance;
+    private boolean active;
     private UUID userProfileId;
 }
