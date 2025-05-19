@@ -26,6 +26,9 @@ FROM openjdk:17-alpine
 RUN adduser -D appuser
 USER appuser
 
+RUN apk update && apk add ca-certificates wget
+RUN wget -P /tmp/certs/ https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem
+
 # Copy built jar from build stage
 COPY --from=build --chown=appuser:appuser /home/gradle/src/build/libs/*.jar /app/app.jar
 
