@@ -1,0 +1,63 @@
+# docker-compose.yaml
+#
+# This file defines and configures multi-container Docker applications for the bank app project.
+# It uses Docker Compose to orchestrate the following services:
+#   - mongodb: A MongoDB database container for storing application data.
+#   - api: The Spring Boot/Kotlin API server that connects to MongoDB.
+#
+# Key sections:
+#   - services: Defines the containers to run.
+#   - networks: Custom network for inter-container communication.
+#   - volumes: Persistent storage for MongoDB data.
+#
+# Usage:
+#   - Run `docker-compose up` to start all services.
+#   - The API will be available on port 8080, and MongoDB on port 27017 (host).
+#
+# Note:
+#   - Environment variables are used to set up MongoDB users and database.
+#   - The API connects to MongoDB using the credentials and URI provided in the environment section.
+
+services:
+  mongodb:
+    image: mongo:7.0.5
+    container_name: mongodb-bankapp
+    restart: unless-stopped
+    networks:
+      - bankapp-network
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: Gudmord92!
+      MONGO_INITDB_DATABASE: bankapp
+      MONGO_INITDB_ADMIN_USERNAME: admin
+      MONGO_INITDB_ADMIN_PASSWORD: Gudmord92!
+      MONGO_INITDB_APP_USERNAME: app
+      MONGO_INITDB_APP_PASSWORD: Gudmord92!
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongo-data:/data/db
+      - ./mongo-init:/docker-entrypoint-initdb.d
+  api:
+    depends_on:
+      - mongodb # Ensures MongoDB starts before the API
+    build: ./
+    restart: on-failure
+    networks:
+      - bankapp-network
+    ports:
+      - "8080:8080" # Exposes API on port 8080
+    volumes:
+      - ./:/usr/src/app # Mounts the current directory into the container
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://app:Gudmord92!@mongodb:27017/bankapp?authSource=bankapp # Connection string for MongoDB
+      JWT_SECRET: chgWXcbAwcFEWEvjZ8lrV8kzEyeY9oAJFCXbLC7whrA=
+      JWT_EXPIRATION: 86400000 # Token expiration time in seconds
+    stdin_open: true
+    tty: true
+
+networks:
+  bankapp-network: # Custom network for service communication
+
+volumes:
+  mongo-data: # Named volume for MongoDB persistent storage
