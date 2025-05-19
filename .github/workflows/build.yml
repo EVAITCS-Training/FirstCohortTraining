@@ -1,0 +1,45 @@
+
+name: Deploy to EC2
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Build with Gradle
+        run: cd my-app && ./gradlew build -x test
+
+      - name: Build & Push Docker image
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+          docker build -t $DOCKER_USERNAME/springboot-app:latest .
+          docker push $DOCKER_USERNAME/springboot-app:latest
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            docker pull ${{ secrets.DOCKER_USERNAME }}/springboot-app:latest
+            docker stop springboot-app || true
+            docker rm springboot-app || true
+            docker run -d --name springboot-app -p 8080:8080 \
+              -e MONGODB_URI="mongodb://${{ secrets.DB_USERNAME }}:${{ secrets.DB_PASSWORD }}@${{ secrets.DB_HOST }}:27017/${{ secrets.DB_NAME }}?ssl=true&retryWrites=false" \
+              ${{ secrets.DOCKER_USERNAME }}/springboot-app:latest
