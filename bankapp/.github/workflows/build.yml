@@ -19,7 +19,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Build with Gradle
-        run: cd my-app && ./gradlew build -x test
+        run: cd bankapp && ./gradlew build -x test
 
       - name: Build & Push Docker image
         env:
