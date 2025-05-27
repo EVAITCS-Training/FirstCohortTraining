@@ -44,13 +44,14 @@ public class UserCredentialService {
      * - Assigns a default role of "ROLE_USER".
      * - Saves the user credentials in the database.
      */
-    public void registerUser(AuthenticationRequest request) {
+    public String registerUser(AuthenticationRequest request) {
         UserCredential userCredential = new UserCredential();
         userCredential.setId(UUID.randomUUID());
         userCredential.setUsername(request.username());
         userCredential.setPassword(passwordEncoder.encode(request.password()));
         userCredential.setRole("ROLE_USER");
         userCredentialRepository.insert(userCredential);
+        return userCredential.getId().toString();
     }
 
     /**

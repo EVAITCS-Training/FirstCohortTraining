@@ -1,6 +1,9 @@
 package com.horrorcore.bankapp.services;
 
 import com.horrorcore.bankapp.config.JwtConfigProperty;
+import com.horrorcore.bankapp.entities.UserCredential;
+import com.horrorcore.bankapp.entities.UserProfile;
+import com.horrorcore.bankapp.repositories.UserProfileRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -25,6 +28,9 @@ public class JwtService {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private UserProfileRepository userProfileRepository;
+
     /**
      * Generates a JWT token for the given username.
      * The token includes claims such as the username and roles of the user.
@@ -33,10 +39,13 @@ public class JwtService {
      * @return the generated JWT token as a String
      */
     public String generateToken(String username) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        UserCredential userDetails = (UserCredential) userDetailsService.loadUserByUsername(username);
+        UserProfile userProfile = userProfileRepository.findByUserCredentialId(userDetails.getId())
+                .orElseThrow(() -> new RuntimeException("User profile not found for user: " + username));
         Map<String, Object> claims = new HashMap<>();
         claims.put("sub", userDetails.getUsername());
         claims.put("role", userDetails.getAuthorities().toString());
+        claims.put("profileId", userProfile.getId().toString());
         return generateToken(claims, userDetails);
     }
 

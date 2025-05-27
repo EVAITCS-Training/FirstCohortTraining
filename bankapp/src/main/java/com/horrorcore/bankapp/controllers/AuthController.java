@@ -44,8 +44,7 @@ public class AuthController {
      * @return A ResponseEntity with an HTTP 200 status if the registration is successful.
      */
     @PostMapping("/register")
-    public ResponseEntity<Void> register(@RequestBody AuthenticationRequest authenticationRequest) {
-        userCredentialService.registerUser(authenticationRequest);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<String> register(@RequestBody AuthenticationRequest authenticationRequest) {
+        return ResponseEntity.ok(userCredentialService.registerUser(authenticationRequest));
     }
 }

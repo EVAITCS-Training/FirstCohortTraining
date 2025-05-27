@@ -1,3 +1,19 @@
+# GitHub Actions workflow for deploying a Spring Boot application to an EC2 instance.
+#
+# This workflow is triggered on every push to the `main` branch.
+# It performs the following steps:
+#   1. Checks out the repository code.
+#   2. Sets up JDK 17 using the Temurin distribution.
+#   3. Makes the Gradle wrapper executable.
+#   4. Builds the project with Gradle, skipping tests.
+#   5. Copies the built Spring Boot JAR to the EC2 instance using SCP.
+#   6. Connects to the EC2 instance via SSH, stops any running Java process,
+#      and starts the new Spring Boot JAR in the background.
+#
+# Required secrets:
+#   - EC2_HOST: The public DNS or IP address of the EC2 instance.
+#   - EC2_USERNAME: The SSH username for the EC2 instance.
+#   - EC2_SSH_KEY: The private SSH key for authentication.
 
 name: Deploy to EC2
 
@@ -10,20 +26,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Check out the repository code
       - uses: actions/checkout@v3
 
+      # Step 2: Set up JDK 17 (Temurin)
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
 
+      # Step 3: Make the Gradle wrapper executable
       - name: Make Gradle Wrapper Executable
         run: cd bankapp && chmod +x gradlew
 
+      # Step 4: Build the project with Gradle, skipping tests
       - name: Build with Gradle
         run: cd bankapp && ./gradlew build -x test
 
+      # Step 5: Copy the built JAR to the EC2 instance using SCP
       - name: Copy Spring Boot JAR to EC2
         uses: appleboy/scp-action@master
         continue-on-error: true
@@ -34,7 +55,7 @@ jobs:
           source: "bankapp/build/libs/*.jar"
           target: "~/springboot-app.jar"
 
-
+      # Step 6: SSH into EC2, stop any running Java process, and start the new JAR
       - name: Run Spring Boot JAR on EC2
         uses: appleboy/ssh-action@master
         continue-on-error: true
