@@ -4,6 +4,7 @@ import LandingPage from './static/LandingPage'
 import Navbar from './static/Navbar'
 import Register from './components/Register'
 import Login from './components/Login'
+import Dashboard from './components/Dashboard'
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
         <Route element={<LandingPage/>} path='/' />
         <Route element={<Register/>} path='/register' />
         <Route element={<Login/>} path='/login'/>
+        <Route element={<Dashboard/>} path='/dashboard' />
       </Routes>
     </>
   )
